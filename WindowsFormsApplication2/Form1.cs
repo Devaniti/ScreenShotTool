@@ -87,7 +87,13 @@ namespace WindowsFormsApplication2
             Size temp = new Size(w, h);
             var bmpScreenshot1 = cropAtRect(bmpScreenshot, new System.Drawing.Rectangle(x1, y1, w, h));
             //var bmpScreenshot1 = bmpScreenshot.Clone(new System.Drawing.Rectangle(x, y, w, h), PixelFormat.Format32bppArgb);
-            Clipboard.SetImage(bmpScreenshot1);
+            var MyPicturesPath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
+            var ScreenShotPath = MyPicturesPath + "\\screenshot.png";
+            bmpScreenshot1.Save(ScreenShotPath, ImageFormat.Png);
+            var ClipboardData = new DataObject();
+            ClipboardData.SetImage(bmpScreenshot1);
+            ClipboardData.SetText(ScreenShotPath);
+            Clipboard.SetDataObject(ClipboardData, true);
             Close();
         }
 
