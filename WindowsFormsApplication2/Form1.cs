@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlTypes;
@@ -90,9 +91,12 @@ namespace WindowsFormsApplication2
             var MyPicturesPath = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures);
             var ScreenShotPath = MyPicturesPath + "\\screenshot.png";
             bmpScreenshot1.Save(ScreenShotPath, ImageFormat.Png);
+            var ClipboardFile = new StringCollection();
+            ClipboardFile.Add(ScreenShotPath);
             var ClipboardData = new DataObject();
             ClipboardData.SetImage(bmpScreenshot1);
             ClipboardData.SetText(ScreenShotPath);
+            ClipboardData.SetFileDropList(ClipboardFile);
             Clipboard.SetDataObject(ClipboardData, true);
             Close();
         }
